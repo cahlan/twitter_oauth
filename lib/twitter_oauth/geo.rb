@@ -18,6 +18,14 @@ module TwitterOAuth
       get "/geo/search.json?#{args}"
     end
     
+    # Search for similar places before creating a new place_id
+    # Given a latitude and a longitude pair and a name, return similar places found in Twitter 
+    def geo_similar_places(options={})
+      options[:query] = URI.escape(options[:query]) if options[:query]
+      args = options.map{|k,v| "#{k}=#{v}"}.join('&')
+      get "/geo/similar_places.json?#{args}"
+    end
+    
     # Find out more details of a place that was returned from the geo/reverse_geocode method.
     def geo(id)
       get "/geo/id/#{id}.json"
